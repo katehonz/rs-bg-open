@@ -6,6 +6,8 @@ A modern web-based accounting system built with Rust (backend) and React (fronte
 
 RS-BG-Open is an open source accounting system created specifically for the needs of Bulgarian companies. The system provides a complete set of features needed for accounting, VAT reporting, depreciation, INTRASTAT declarations, and more.
 
+The software has been developed and tested with rustc version 1.89.0 (29483883e 2025-08-04).
+
 ## 🚀 Key Features
 
 - ✅ **Full Bulgarian Chart of Accounts** - Automatically loaded when creating a company
