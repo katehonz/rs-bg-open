@@ -1,0 +1,117 @@
+# Rust/Cargo
+/target/
+**/target/
+**/*.rs.bk
+Cargo.lock
+*.pdb
+
+# Node.js/Frontend
+node_modules/
+dist/
+build/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment and config
+.env
+.env.local
+.env.*.local
+.envrc
+configdb.json
+configdb.local.json
+!configdb.example.json
+.local/
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+accounting.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+backend.log
+frontend.log
+server.log
+graphql.log
+
+# Test files
+test_*.html
+test_*.js
+test_*.json
+!test_*.rs
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Backup files
+*.backup
+*.bak
+*~
+backups/
+
+# Temp files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# SSH keys
+*.key
+*.pem
+
+# Docker
+.docker/
+.dockerignore
+
+# OS generated files
+Thumbs.db
+
+# Debug files
+debug_parser
+simple_controlisy_test
+test_controlisy_multiple_docs
+test_real_controlisy
+test_simple_parser
+
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Coverage reports
+coverage/
+*.lcov
+
+# IDE specific files
+*.vscode
+*.idea
+
+# Archives
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Custom project specific
+OLD-ac-bg/
+file/
+star-start.zip
+*.pid

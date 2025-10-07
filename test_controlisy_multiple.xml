@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Data>
+    <Contractors>
+        <Contractor ca_contractorId="1" contractorName="Test Contractor 1" contractorEIK="123456789" contractorVATNumber="BG123456789" contractorInsideNumber="001"/>
+        <Contractor ca_contractorId="2" contractorName="Test Contractor 2" contractorEIK="987654321" contractorVATNumber="BG987654321" contractorInsideNumber="002"/>
+    </Contractors>
+    <Documents>
+        <Document
+            accountingMonth="2024-01-01"
+            vatMonth="2024-01-01"
+            docIdent="DOC001"
+            documentDate="2024-01-15"
+            documentNumber="INV001"
+            ca_docId="1"
+            reason="Test Document 1"
+            remark=""
+            netAmountBGN="100.00"
+            vatAmountBGN="20.00"
+            totalAmountBGN="120.00"
+            ca_vatOperationID="1"
+            ca_docTypeID="1"
+            ca_contractorId="1">
+            <Accounting amountBGN="120.00" ca_vatOperationID="1">
+                <AccountingDetail
+                    direction="Debit"
+                    currency="BGN"
+                    accountNumber="411001"
+                    accountName="Клиенти"
+                    contractorName="Test Contractor 1"
+                    contractorEIK="123456789"
+                    contractorVATNumber="BG123456789"
+                    unit=""
+                    quantity=""/>
+            </Accounting>
+            <Accounting amountBGN="100.00" ca_vatOperationID="1">
+                <AccountingDetail
+                    direction="Credit"
+                    currency="BGN"
+                    accountNumber="701001"
+                    accountName="Приходи от продажби"
+                    contractorName="Test Contractor 1"
+                    contractorEIK="123456789"
+                    contractorVATNumber="BG123456789"
+                    unit=""
+                    quantity=""/>
+            </Accounting>
+            <Accounting amountBGN="20.00" ca_vatOperationID="1">
+                <AccountingDetail
+                    direction="Credit"
+                    currency="BGN"
+                    accountNumber="453201"
+                    accountName="Начислен ДДС"
+                    contractorName="Test Contractor 1"
+                    contractorEIK="123456789"
+                    contractorVATNumber="BG123456789"
+                    unit=""
+                    quantity=""/>
+            </Accounting>
+            <VATData vatRegister="2" contractorName="Test Contractor 1" contractorVATNumber="BG123456789">
+                <VAT
+                    taxBase="100.00"
+                    vatRate="20.00"
+                    vatAmountBGN="20.00"
+                    ca_vatOperationID="1"
+                    vatOperationIden="01"
+                    vatOperationIdenName="Облагаеми доставки с 20%"
+                    vatOperationName="Продажби с ДДС"
+                    vatOperationAdditionalIden=""
+                    vatOperationAdditionalName=""
+                    vatOperationDetail=""/>
+            </VATData>
+        </Document>
+        <Document
+            accountingMonth="2024-01-01"
+            vatMonth="2024-01-01"
+            docIdent="DOC002"
+            documentDate="2024-01-16"
+            documentNumber="INV002"
+            ca_docId="2"
+            reason="Test Document 2"
+            remark=""
+            netAmountBGN="200.00"
+            vatAmountBGN="40.00"
+            totalAmountBGN="240.00"
+            ca_vatOperationID="1"
+            ca_docTypeID="1"
+            ca_contractorId="2">
+            <Accounting amountBGN="240.00" ca_vatOperationID="1">
+                <AccountingDetail
+                    direction="Debit"
+                    currency="BGN"
+                    accountNumber="411002"
+                    accountName="Клиенти"
+                    contractorName="Test Contractor 2"
+                    contractorEIK="987654321"
+                    contractorVATNumber="BG987654321"
+                    unit=""
+                    quantity=""/>
+            </Accounting>
+            <Accounting amountBGN="200.00" ca_vatOperationID="1">
+                <AccountingDetail
+                    direction="Credit"
+                    currency="BGN"
+                    accountNumber="701002"
+                    accountName="Приходи от продажби"
+                    contractorName="Test Contractor 2"
+                    contractorEIK="987654321"
+                    contractorVATNumber="BG987654321"
+                    unit=""
+                    quantity=""/>
+            </Accounting>
+            <Accounting amountBGN="40.00" ca_vatOperationID="1">
+                <AccountingDetail
+                    direction="Credit"
+                    currency="BGN"
+                    accountNumber="453202"
+                    accountName="Начислен ДДС"
+                    contractorName="Test Contractor 2"
+                    contractorEIK="987654321"
+                    contractorVATNumber="BG987654321"
+                    unit=""
+                    quantity=""/>
+            </Accounting>
+            <VATData vatRegister="2" contractorName="Test Contractor 2" contractorVATNumber="BG987654321">
+                <VAT
+                    taxBase="200.00"
+                    vatRate="20.00"
+                    vatAmountBGN="40.00"
+                    ca_vatOperationID="1"
+                    vatOperationIden="01"
+                    vatOperationIdenName="Облагаеми доставки с 20%"
+                    vatOperationName="Продажби с ДДС"
+                    vatOperationAdditionalIden=""
+                    vatOperationAdditionalName=""
+                    vatOperationDetail=""/>
+            </VATData>
+        </Document>
+        <Document
+            accountingMonth="2024-01-01"
+            vatMonth="2024-01-01"
+            docIdent="DOC003"
+            documentDate="2024-01-17"
+            documentNumber="INV003"
+            ca_docId="3"
+            reason="Test Document 3"
+            remark=""
+            netAmountBGN="300.00"
+            vatAmountBGN="60.00"
+            totalAmountBGN="360.00"
+            ca_vatOperationID="1"
+            ca_docTypeID="1"
+            ca_contractorId="1">
+            <Accounting amountBGN="360.00" ca_vatOperationID="1">
+                <AccountingDetail
+                    direction="Debit"
+                    currency="BGN"
+                    accountNumber="411003"
+                    accountName="Клиенти"
+                    contractorName="Test Contractor 1"
+                    contractorEIK="123456789"
+                    contractorVATNumber="BG123456789"
+                    unit=""
+                    quantity=""/>
+            </Accounting>
+            <Accounting amountBGN="300.00" ca_vatOperationID="1">
+                <AccountingDetail
+                    direction="Credit"
+                    currency="BGN"
+                    accountNumber="701003"
+                    accountName="Приходи от продажби"
+                    contractorName="Test Contractor 1"
+                    contractorEIK="123456789"
+                    contractorVATNumber="BG123456789"
+                    unit=""
+                    quantity=""/>
+            </Accounting>
+            <Accounting amountBGN="60.00" ca_vatOperationID="1">
+                <AccountingDetail
+                    direction="Credit"
+                    currency="BGN"
+                    accountNumber="453203"
+                    accountName="Начислен ДДС"
+                    contractorName="Test Contractor 1"
+                    contractorEIK="123456789"
+                    contractorVATNumber="BG123456789"
+                    unit=""
+                    quantity=""/>
+            </Accounting>
+            <VATData vatRegister="2" contractorName="Test Contractor 1" contractorVATNumber="BG123456789">
+                <VAT
+                    taxBase="300.00"
+                    vatRate="20.00"
+                    vatAmountBGN="60.00"
+                    ca_vatOperationID="1"
+                    vatOperationIden="01"
+                    vatOperationIdenName="Облагаеми доставки с 20%"
+                    vatOperationName="Продажби с ДДС"
+                    vatOperationAdditionalIden=""
+                    vatOperationAdditionalName=""
+                    vatOperationDetail=""/>
+            </VATData>
+        </Document>
+    </Documents>
+</Data>

@@ -1,0 +1,67 @@
+# Multi-stage build за Rust accounting service
+FROM rust:1.75-alpine as builder
+
+# Инсталиране на необходими dependencies
+RUN apk add --no-cache \
+    musl-dev \
+    pkgconfig \
+    openssl-dev \
+    postgresql-dev \
+    build-base
+
+WORKDIR /app
+
+# Копиране на Cargo файловете за dependency caching
+COPY backend/Cargo.toml backend/Cargo.lock ./
+COPY migration/Cargo.toml ./migration/
+
+# Създаване на dummy main.rs за cargo build dependencies
+RUN mkdir src && echo "fn main() {}" > src/main.rs
+
+# Build dependencies (ще се кешират при следващи build-ове)
+RUN cargo build --release && rm -rf src target/release/deps/backend*
+
+# Копиране на source код
+COPY backend/src ./src/
+COPY migration ./migration/
+
+# Build на приложението
+RUN cargo build --release
+
+# Production stage
+FROM alpine:3.19
+
+# Инсталиране на runtime dependencies
+RUN apk add --no-cache \
+    ca-certificates \
+    postgresql-client \
+    curl \
+    && rm -rf /var/cache/apk/*
+
+# Създаване на non-root потребител
+RUN adduser -D -s /bin/sh appuser
+
+WORKDIR /app
+
+# Копиране на binary от builder stage
+COPY --from=builder /app/target/release/backend /app/backend
+COPY --from=builder /app/migration /app/migration
+
+# Копиране на конфигурационни файлове
+COPY backend/docs ./docs/
+COPY backend/Cargo.toml ./
+
+# Създаване на log директория
+RUN mkdir -p logs && chown -R appuser:appuser /app
+
+USER appuser
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+# Expose port
+EXPOSE 8080
+
+# Стартиране на приложението
+CMD ["./backend"]
