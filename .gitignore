@@ -81,6 +81,7 @@ star-start.zip
 *.pid
 
 # IPv6 related files (private keys, certificates, configs)
+IPV6/
 IPV6/*.conf
 IPV6/*.crt
 IPV6/*.key
@@ -96,6 +97,9 @@ z-cont/**/*
 # Bank files (sensitive transaction data)
 banki/*
 banki/**/*
+
+# Blog files (public documentation)
+BLOG/
 
 # Other sensitive files
 *.key
