@@ -1,0 +1,18 @@
+[package]
+name = "migration"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "migration"
+path = "src/lib.rs"
+
+[[bin]]
+name = "migration"
+path = "src/main.rs"
+
+[dependencies]
+sea-orm-migration = { version = "1.1", features = ["runtime-tokio-native-tls", "sqlx-postgres"] }
+tokio = { workspace = true }
+csv = "1.3"

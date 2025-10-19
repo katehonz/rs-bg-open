@@ -1,0 +1,144 @@
+{
+  "version": "1.0",
+  "source": "AI_DOCUMENT_RECOGNITION",
+  "timestamp": "2025-09-07T14:35:00Z",
+  "documents": [
+    {
+      "documentType": "INVOICE",
+      "transactionType": "SALE",
+      "documentNumber": "2025-0001",
+      "documentDate": "2025-09-05",
+      "dueDate": "2025-10-05",
+      "currency": "BGN",
+      
+      "counterpart": {
+        "name": "Клиент ООД",
+        "eik": "987654321",
+        "vatNumber": "BG987654321",
+        "address": "бул. Витоша 100",
+        "city": "София",
+        "country": "BG",
+        "isVatRegistered": true
+      },
+      
+      "amounts": {
+        "netAmount": 10000.00,
+        "vatAmount": 2000.00,
+        "totalAmount": 12000.00
+      },
+      
+      "vatDetails": {
+        "vatRegister": 2,
+        "vatPeriod": "2025-09",
+        "operations": [
+          {
+            "operationCode": "01",
+            "operationName": "Облагаеми доставки със ставка 20%",
+            "taxBase": 10000.00,
+            "vatRate": 20,
+            "vatAmount": 2000.00
+          }
+        ]
+      },
+      
+      "lineItems": [
+        {
+          "description": "Консултантски услуги",
+          "quantity": 40,
+          "unitPrice": 200.00,
+          "netAmount": 8000.00,
+          "vatRate": 20,
+          "vatAmount": 1600.00,
+          "totalAmount": 9600.00,
+          "accountCode": "702"
+        },
+        {
+          "description": "Обучение",
+          "quantity": 1,
+          "unitPrice": 2000.00,
+          "netAmount": 2000.00,
+          "vatRate": 20,
+          "vatAmount": 400.00,
+          "totalAmount": 2400.00,
+          "accountCode": "703"
+        }
+      ],
+      
+      "accountingEntries": [
+        {
+          "accountCode": "411",
+          "accountName": "Клиенти",
+          "debit": 12000.00,
+          "credit": 0.00,
+          "counterpartEik": "987654321"
+        },
+        {
+          "accountCode": "702",
+          "accountName": "Приходи от продажба на продукция",
+          "debit": 0.00,
+          "credit": 8000.00
+        },
+        {
+          "accountCode": "703",
+          "accountName": "Приходи от услуги",
+          "debit": 0.00,
+          "credit": 2000.00
+        },
+        {
+          "accountCode": "4532",
+          "accountName": "ДДС за внасяне",
+          "debit": 0.00,
+          "credit": 2000.00
+        }
+      ],
+      
+      "aiRecognition": {
+        "confidence": 0.97,
+        "recognizedFields": {
+          "documentNumber": 0.99,
+          "documentDate": 0.98,
+          "amounts": 0.99,
+          "counterpart": 0.95,
+          "vatDetails": 0.96
+        },
+        "suggestedVatCode": "01",
+        "warnings": [],
+        "needsReview": false
+      }
+    }
+  ],
+  
+  "vatSummary": {
+    "period": "2025-09",
+    "sales": {
+      "totalTaxBase": 10000.00,
+      "totalVat": 2000.00,
+      "byOperation": {
+        "01": {"base": 10000.00, "vat": 2000.00}
+      }
+    },
+    "vatPayable": 2000.00
+  },
+  
+  "mappingRules": {
+    "accounts": {
+      "411": "4110",
+      "702": "7020",
+      "703": "7030",
+      "4532": "4532"
+    },
+    "vatCodes": {
+      "sale_with_vat": "01",
+      "sale_without_vat": "08"
+    }
+  },
+  
+  "validationErrors": [],
+  
+  "importSettings": {
+    "validateBeforeImport": true,
+    "autoCreateCounterparts": true,
+    "groupByDocument": true,
+    "skipDuplicates": true
+  }
+}

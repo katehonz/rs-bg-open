@@ -1,0 +1,105 @@
+# Rust/Cargo
+/target/
+**/target/
+**/*.rs.bk
+Cargo.lock
+*.pdb
+
+# Node.js/Frontend
+node_modules/
+dist/
+build/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment and config
+.env
+.env.local
+.env.*.local
+configdb.json
+!configdb.example.json
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+accounting.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+backend.log
+frontend.log
+server.log
+graphql.log
+
+# Test files
+test_*.html
+test_*.js
+test_*.json
+!test_*.rs
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Backup files
+*.backup
+*.bak
+backups/
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.temp
+
+# Archives
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Custom project specific
+OLD-ac-bg/
+file/
+star-start.zip
+*.pid
+
+# IPv6 related files (private keys, certificates, configs)
+IPV6/*.conf
+IPV6/*.crt
+IPV6/*.key
+IPV6/ssl/*.crt
+IPV6/ssl/*.key
+IPV6/wireguard/*/*.conf
+IPV6/wireguard/wg_confs/*.conf
+
+# VAT/NAP related files (sensitive data)
+z-cont/*
+z-cont/**/*
+
+# Bank files (sensitive transaction data)
+banki/*
+banki/**/*
+
+# Other sensitive files
+*.key
+*.crt
+*.pem
+*.p12
+*.pfx

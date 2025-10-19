@@ -1,0 +1,64 @@
+# Multi-stage build за Rust accounting service
+FROM rust:1.89-alpine as builder
+
+# Инсталиране на необходими dependencies
+RUN apk add --no-cache \
+    musl-dev \
+    pkgconfig \
+    openssl-dev \
+    openssl-libs-static \
+    postgresql-dev \
+    build-base \
+    linux-headers \
+    clang-dev \
+    llvm-dev
+
+WORKDIR /app
+
+# Копиране на всички файлове
+COPY . ./
+
+# Копиране на file директорията за миграции
+COPY file /app/file
+
+# Build на приложението
+RUN cargo build --release --package backend
+
+# Production stage
+FROM alpine:3.19
+
+# Инсталиране на runtime dependencies
+RUN apk add --no-cache \
+    ca-certificates \
+    postgresql-client \
+    curl \
+    && rm -rf /var/cache/apk/*
+
+# Създаване на non-root потребител
+RUN adduser -D -s /bin/sh appuser
+
+WORKDIR /app
+
+# Копиране на binary от builder stage
+COPY --from=builder /app/target/release/backend /app/backend
+COPY --from=builder /app/migration /app/migration
+COPY --from=builder /app/file /app/file
+
+# Копиране на конфигурационни файлове
+COPY backend/docs ./docs/
+COPY backend/Cargo.toml ./
+
+# Създаване на log директория
+RUN mkdir -p logs && chown -R appuser:appuser /app
+
+USER appuser
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+# Expose port
+EXPOSE 8080
+
+# Стартиране на приложението
+CMD ["./backend"]

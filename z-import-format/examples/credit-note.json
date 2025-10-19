@@ -1,0 +1,115 @@
+{
+  "version": "1.0",
+  "source": "AI_DOCUMENT_RECOGNITION",
+  "timestamp": "2025-09-10T10:00:00Z",
+  "documents": [
+    {
+      "documentType": "CREDIT_NOTE",
+      "transactionType": "SALE",
+      "documentNumber": "КИ-2025-0001",
+      "documentDate": "2025-09-10",
+      "originalInvoice": "2025-0001",
+      "currency": "BGN",
+      
+      "counterpart": {
+        "name": "Клиент ООД",
+        "eik": "987654321",
+        "vatNumber": "BG987654321",
+        "address": "бул. Витоша 100",
+        "city": "София",
+        "country": "BG",
+        "isVatRegistered": true
+      },
+      
+      "amounts": {
+        "netAmount": -1000.00,
+        "vatAmount": -200.00,
+        "totalAmount": -1200.00
+      },
+      
+      "vatDetails": {
+        "vatRegister": 2,
+        "vatPeriod": "2025-09",
+        "operations": [
+          {
+            "operationCode": "01",
+            "operationName": "Корекция на облагаема доставка",
+            "taxBase": -1000.00,
+            "vatRate": 20,
+            "vatAmount": -200.00,
+            "isCreditNote": true
+          }
+        ]
+      },
+      
+      "lineItems": [
+        {
+          "description": "Връщане на част от услугата",
+          "quantity": -5,
+          "unitPrice": 200.00,
+          "netAmount": -1000.00,
+          "vatRate": 20,
+          "vatAmount": -200.00,
+          "totalAmount": -1200.00,
+          "accountCode": "702"
+        }
+      ],
+      
+      "accountingEntries": [
+        {
+          "accountCode": "411",
+          "accountName": "Клиенти",
+          "debit": 0.00,
+          "credit": 1200.00,
+          "counterpartEik": "987654321"
+        },
+        {
+          "accountCode": "702",
+          "accountName": "Приходи от продажба на продукция",
+          "debit": 1000.00,
+          "credit": 0.00,
+          "description": "Сторно на приходи"
+        },
+        {
+          "accountCode": "4532",
+          "accountName": "ДДС за внасяне",
+          "debit": 200.00,
+          "credit": 0.00,
+          "description": "Сторно на ДДС"
+        }
+      ],
+      
+      "aiRecognition": {
+        "confidence": 0.95,
+        "recognizedFields": {
+          "documentType": 0.97,
+          "documentNumber": 0.98,
+          "originalInvoice": 0.96,
+          "amounts": 0.99,
+          "counterpart": 0.94
+        },
+        "warnings": [
+          "Моля проверете връзката с оригиналната фактура"
+        ],
+        "needsReview": false
+      }
+    }
+  ],
+  
+  "mappingRules": {
+    "accounts": {
+      "411": "4110",
+      "702": "7020",
+      "4532": "4532"
+    }
+  },
+  
+  "validationErrors": [],
+  
+  "importSettings": {
+    "validateBeforeImport": true,
+    "autoCreateCounterparts": false,
+    "groupByDocument": true,
+    "skipDuplicates": true
+  }
+}

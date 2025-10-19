@@ -1,0 +1,165 @@
+version: '3.8'
+
+services:
+  # WireGuard VPN за IPv6
+  wireguard:
+    image: linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Sofia
+    volumes:
+      - ./IPV6/wireguard:/config
+      - /lib/modules:/lib/modules:ro
+    ports:
+      - "51820:51820/udp"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.all.forwarding=1
+    restart: unless-stopped
+    networks:
+      accounting_network:
+        ipv4_address: 172.20.0.2
+
+  # PostgreSQL База данни
+  db:
+    image: postgres:15-alpine
+    container_name: accounting_db
+    environment:
+      POSTGRES_DB: accounting
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change_me_in_production}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=bg_BG.UTF-8 --lc-ctype=bg_BG.UTF-8"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"  # Променен порт заради локален PostgreSQL
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d accounting"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      accounting_network:
+        ipv4_address: 172.20.0.10
+
+  # Redis за caching и sessions
+  redis:
+    image: redis:7-alpine
+    container_name: accounting_redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      accounting_network:
+        ipv4_address: 172.20.0.11
+
+  # Главен счетоводен сервиз (Rust Backend)
+  accounting-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.accounting
+    container_name: accounting_service
+    environment:
+      DATABASE_URL: postgresql://app:${DB_PASSWORD:-change_me_in_production}@db:5432/accounting
+      REDIS_URL: redis://redis:6379
+      RUST_LOG: ${RUST_LOG:-info}
+      HOST: 0.0.0.0
+      PORT: 8080
+      JWT_SECRET: ${JWT_SECRET:-your_jwt_secret_change_in_production}
+      JWT_EXPIRATION_HOURS: ${JWT_EXPIRATION_HOURS:-24}
+    expose:
+      - "8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      wireguard:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      accounting_network:
+        ipv4_address: 172.20.0.20
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: accounting_frontend
+    environment:
+      # В продукция използвай домейна
+      REACT_APP_API_BASE_URL: https://rs.ddns-ip.net
+      REACT_APP_DOMAIN: rs.ddns-ip.net
+    expose:
+      - "3000"
+    depends_on:
+      - accounting-service
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      accounting_network:
+        ipv4_address: 172.20.0.30
+
+  # Nginx Reverse Proxy с SSL
+  nginx:
+    image: nginx:alpine
+    container_name: accounting_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./IPV6/ssl:/etc/nginx/ssl:ro
+      - ./nginx/certbot:/var/www/certbot:ro
+    depends_on:
+      - frontend
+      - accounting-service
+      - wireguard
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      accounting_network:
+        ipv4_address: 172.20.0.100
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  accounting_network:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+        - subnet: fd00:172:20::/48
+          gateway: fd00:172:20::1

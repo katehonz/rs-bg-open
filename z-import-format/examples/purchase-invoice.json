@@ -1,0 +1,128 @@
+{
+  "version": "1.0",
+  "source": "AI_DOCUMENT_RECOGNITION",
+  "timestamp": "2025-09-07T14:30:00Z",
+  "documents": [
+    {
+      "documentType": "INVOICE",
+      "transactionType": "PURCHASE",
+      "documentNumber": "0000001234",
+      "documentDate": "2025-09-01",
+      "dueDate": "2025-09-30",
+      "currency": "BGN",
+      
+      "counterpart": {
+        "name": "Доставчик ЕООД",
+        "eik": "123456789",
+        "vatNumber": "BG123456789",
+        "address": "ул. Индустриална 15",
+        "city": "София",
+        "country": "BG",
+        "isVatRegistered": true
+      },
+      
+      "amounts": {
+        "netAmount": 5000.00,
+        "vatAmount": 1000.00,
+        "totalAmount": 6000.00
+      },
+      
+      "vatDetails": {
+        "vatRegister": 1,
+        "vatPeriod": "2025-09",
+        "operations": [
+          {
+            "operationCode": "01",
+            "operationName": "Получени доставки с право на пълен данъчен кредит",
+            "taxBase": 5000.00,
+            "vatRate": 20,
+            "vatAmount": 1000.00,
+            "deductibleVat": 1000.00,
+            "nonDeductibleVat": 0.00
+          }
+        ]
+      },
+      
+      "lineItems": [
+        {
+          "description": "Офис материали",
+          "quantity": 50,
+          "unitPrice": 60.00,
+          "netAmount": 3000.00,
+          "vatRate": 20,
+          "vatAmount": 600.00,
+          "totalAmount": 3600.00,
+          "accountCode": "302"
+        },
+        {
+          "description": "Канцеларски консумативи",
+          "quantity": 100,
+          "unitPrice": 20.00,
+          "netAmount": 2000.00,
+          "vatRate": 20,
+          "vatAmount": 400.00,
+          "totalAmount": 2400.00,
+          "accountCode": "302"
+        }
+      ],
+      
+      "accountingEntries": [
+        {
+          "accountCode": "302",
+          "accountName": "Материали",
+          "debit": 5000.00,
+          "credit": 0.00,
+          "description": "Покупка на материали"
+        },
+        {
+          "accountCode": "4531",
+          "accountName": "ДДС за възстановяване",
+          "debit": 1000.00,
+          "credit": 0.00
+        },
+        {
+          "accountCode": "401",
+          "accountName": "Доставчици",
+          "debit": 0.00,
+          "credit": 6000.00,
+          "counterpartEik": "123456789"
+        }
+      ],
+      
+      "aiRecognition": {
+        "confidence": 0.96,
+        "recognizedFields": {
+          "documentNumber": 0.98,
+          "documentDate": 0.97,
+          "amounts": 0.99,
+          "counterpart": 0.93,
+          "vatDetails": 0.95
+        },
+        "suggestedVatCode": "01",
+        "warnings": [],
+        "needsReview": false
+      }
+    }
+  ],
+  
+  "mappingRules": {
+    "accounts": {
+      "302": "3020",
+      "401": "4010",
+      "4531": "4531"
+    },
+    "vatCodes": {
+      "purchase_with_vat": "01",
+      "purchase_without_vat": "03"
+    }
+  },
+  
+  "validationErrors": [],
+  
+  "importSettings": {
+    "validateBeforeImport": true,
+    "autoCreateCounterparts": true,
+    "groupByDocument": true,
+    "skipDuplicates": true
+  }
+}

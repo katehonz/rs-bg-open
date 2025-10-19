@@ -1,0 +1,23 @@
+pub mod accounting_resolvers;
+pub mod admin_resolvers;
+pub mod ai_accounting_settings_resolvers;
+pub mod ai_bank_accounting_settings_resolvers;
+pub mod bank_resolvers;
+pub mod contragent_resolvers;
+pub mod context;
+pub mod controlisy_resolver;
+pub mod currency_resolvers;
+pub mod fixed_assets_resolvers;
+pub mod inventory_resolvers;
+pub mod intrastat_resolver;
+pub mod invoice_resolver;
+pub mod maintenance_resolver;
+pub mod mutation;
+pub mod query;
+pub mod reports_resolvers;
+pub mod saft_resolvers;
+pub mod user_resolvers;
+pub mod vat_resolvers;
+
+pub use mutation::Mutation;
+pub use query::Query;

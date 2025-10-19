@@ -1,0 +1,83 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  CARGO_HOME: ${CI_PROJECT_DIR}/.cargo
+  RUST_BACKTRACE: "1"
+
+cache:
+  paths:
+    - .cargo/
+    - target/
+    - frontend/node_modules/
+
+# Build Backend
+build-backend:
+  stage: build
+  image: rust:latest
+  script:
+    - apt-get update && apt-get install -y postgresql-client
+    - cargo build --release --manifest-path=backend/Cargo.toml
+  artifacts:
+    paths:
+      - backend/target/release/backend
+    expire_in: 1 week
+
+# Build Frontend
+build-frontend:
+  stage: build
+  image: node:18
+  script:
+    - cd frontend
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/dist/
+    expire_in: 1 week
+
+# Test Backend
+test-backend:
+  stage: test
+  image: rust:latest
+  services:
+    - postgres:14
+  variables:
+    POSTGRES_DB: rs_ac_bg_test
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: test
+    DATABASE_URL: "postgres://postgres:test@postgres/rs_ac_bg_test"
+  script:
+    - apt-get update && apt-get install -y postgresql-client
+    - cargo test --manifest-path=backend/Cargo.toml
+
+# Test Frontend
+test-frontend:
+  stage: test
+  image: node:18
+  script:
+    - cd frontend
+    - npm ci
+    - npm run test --if-present
+
+# Deploy to Production (manual)
+deploy-production:
+  stage: deploy
+  image: alpine:latest
+  when: manual
+  only:
+    - main
+    - master
+  script:
+    - apk add --no-cache openssh-client
+    - echo "Deploying to production..."
+    # Add your deployment commands here
+    # Example:
+    # - scp backend/target/release/backend user@server:/path/to/app/
+    # - scp -r frontend/dist/* user@server:/var/www/html/
+    # - ssh user@server "systemctl restart rs-ac-bg"
+  environment:
+    name: production
+    url: https://your-domain.com

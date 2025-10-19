@@ -1,0 +1,150 @@
+{
+  "version": "1.0",
+  "source": "AI_DOCUMENT_RECOGNITION",
+  "timestamp": "2025-09-15T11:00:00Z",
+  "documents": [
+    {
+      "documentType": "PROTOCOL",
+      "transactionType": "PURCHASE",
+      "documentNumber": "ПРОТ-2025-001",
+      "documentDate": "2025-09-15",
+      "currency": "BGN",
+      
+      "counterpart": {
+        "name": "Фирма АД",
+        "eik": "111222333",
+        "vatNumber": "BG111222333",
+        "address": "ул. Централна 10",
+        "city": "Пловдив",
+        "country": "BG",
+        "isVatRegistered": true
+      },
+      
+      "amounts": {
+        "netAmount": 3000.00,
+        "vatAmount": 600.00,
+        "totalAmount": 3000.00
+      },
+      
+      "vatDetails": {
+        "vatRegister": 1,
+        "vatPeriod": "2025-09",
+        "operations": [
+          {
+            "operationCode": "07",
+            "operationName": "Протокол по чл.117 - ВОП по чл.82 ал.1",
+            "taxBase": 3000.00,
+            "vatRate": 20,
+            "vatAmount": 600.00,
+            "deductibleVat": 600.00,
+            "isProtocol": true
+          }
+        ]
+      },
+      
+      "lineItems": [
+        {
+          "description": "Услуги по чл.82 ал.1 от ЗДДС",
+          "quantity": 1,
+          "unitPrice": 3000.00,
+          "netAmount": 3000.00,
+          "vatRate": 20,
+          "vatAmount": 600.00,
+          "totalAmount": 3600.00,
+          "accountCode": "601"
+        }
+      ],
+      
+      "accountingEntries": [
+        {
+          "accountCode": "601",
+          "accountName": "Разходи за материали",
+          "debit": 3000.00,
+          "credit": 0.00,
+          "description": "ВОП по чл.82 ал.1"
+        },
+        {
+          "accountCode": "4531",
+          "accountName": "ДДС за възстановяване",
+          "debit": 600.00,
+          "credit": 0.00,
+          "description": "ДДС за възстановяване по протокол"
+        },
+        {
+          "accountCode": "4532",
+          "accountName": "ДДС за внасяне",
+          "debit": 0.00,
+          "credit": 600.00,
+          "description": "ДДС за внасяне по протокол"
+        },
+        {
+          "accountCode": "401",
+          "accountName": "Доставчици",
+          "debit": 0.00,
+          "credit": 3000.00,
+          "counterpartEik": "111222333"
+        }
+      ],
+      
+      "aiRecognition": {
+        "confidence": 0.94,
+        "recognizedFields": {
+          "documentType": 0.96,
+          "documentNumber": 0.97,
+          "amounts": 0.98,
+          "vatOperation": 0.91,
+          "counterpart": 0.92
+        },
+        "suggestedVatCode": "07",
+        "warnings": [
+          "Протокол по чл.117 - проверете основанието за ВОП"
+        ],
+        "needsReview": true
+      }
+    }
+  ],
+  
+  "vatSummary": {
+    "period": "2025-09",
+    "purchases": {
+      "totalTaxBase": 3000.00,
+      "totalVat": 600.00,
+      "deductibleVat": 600.00,
+      "nonDeductibleVat": 0.00,
+      "byOperation": {
+        "07": {"base": 3000.00, "vat": 600.00}
+      }
+    },
+    "vatPayable": 0.00
+  },
+  
+  "validationRules": {
+    "checkVatNumber": true,
+    "validateVatCalculation": true,
+    "requireCounterpartVat": true,
+    "allowPartialDeduction": false,
+    "protocolRequires82": true
+  },
+  
+  "mappingRules": {
+    "accounts": {
+      "601": "6010",
+      "401": "4010",
+      "4531": "4531",
+      "4532": "4532"
+    },
+    "vatCodes": {
+      "protocol_82_1": "07",
+      "protocol_82_2_5": "08"
+    }
+  },
+  
+  "validationErrors": [],
+  
+  "importSettings": {
+    "validateBeforeImport": true,
+    "autoCreateCounterparts": true,
+    "groupByDocument": true,
+    "skipDuplicates": true
+  }
+}
