@@ -1,0 +1,146 @@
+use sea_orm_migration::prelude::*;
+
+#[derive(DeriveMigrationName)]
+pub struct Migration;
+
+#[async_trait::async_trait]
+impl MigrationTrait for Migration {
+    async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
+        manager
+            .create_table(
+                Table::create()
+                    .table(GlobalContragents::Table)
+                    .if_not_exists()
+                    .col(
+                        ColumnDef::new(GlobalContragents::Id)
+                            .big_integer()
+                            .not_null()
+                            .auto_increment()
+                            .primary_key(),
+                    )
+                    .col(
+                        ColumnDef::new(GlobalContragents::VatNumber)
+                            .string_len(32)
+                            .not_null(),
+                    )
+                    .col(ColumnDef::new(GlobalContragents::Eik).string_len(16))
+                    .col(ColumnDef::new(GlobalContragents::RegistrationNumber).string_len(32))
+                    .col(ColumnDef::new(GlobalContragents::CustomerId).string_len(64))
+                    .col(ColumnDef::new(GlobalContragents::SupplierId).string_len(64))
+                    .col(ColumnDef::new(GlobalContragents::CompanyName).string_len(512))
+                    .col(ColumnDef::new(GlobalContragents::CompanyNameBg).string_len(512))
+                    .col(ColumnDef::new(GlobalContragents::LegalForm).string_len(128))
+                    .col(ColumnDef::new(GlobalContragents::Status).string_len(128))
+                    .col(ColumnDef::new(GlobalContragents::Address).text())
+                    .col(ColumnDef::new(GlobalContragents::LongAddress).text())
+                    .col(ColumnDef::new(GlobalContragents::StreetName).string_len(512))
+                    .col(ColumnDef::new(GlobalContragents::City).string_len(128))
+                    .col(ColumnDef::new(GlobalContragents::PostalCode).string_len(16))
+                    .col(ColumnDef::new(GlobalContragents::Country).string_len(128))
+                    .col(ColumnDef::new(GlobalContragents::ContactPerson).string_len(255))
+                    .col(ColumnDef::new(GlobalContragents::Phone).string_len(64))
+                    .col(ColumnDef::new(GlobalContragents::Email).string_len(255))
+                    .col(ColumnDef::new(GlobalContragents::Website).string_len(255))
+                    .col(ColumnDef::new(GlobalContragents::Type).string_len(32))
+                    .col(ColumnDef::new(GlobalContragents::Iban).string_len(64))
+                    .col(ColumnDef::new(GlobalContragents::Bic).string_len(32))
+                    .col(ColumnDef::new(GlobalContragents::BankName).string_len(255))
+                    .col(
+                        ColumnDef::new(GlobalContragents::VatValid)
+                            .boolean()
+                            .not_null()
+                            .default(false),
+                    )
+                    .col(
+                        ColumnDef::new(GlobalContragents::EikValid)
+                            .boolean()
+                            .not_null()
+                            .default(false),
+                    )
+                    .col(
+                        ColumnDef::new(GlobalContragents::Valid)
+                            .boolean()
+                            .not_null()
+                            .default(false),
+                    )
+                    .col(ColumnDef::new(GlobalContragents::LastValidatedAt).timestamp())
+                    .col(
+                        ColumnDef::new(GlobalContragents::CreatedAt)
+                            .timestamp()
+                            .not_null()
+                            .default(Expr::current_timestamp()),
+                    )
+                    .col(
+                        ColumnDef::new(GlobalContragents::UpdatedAt)
+                            .timestamp()
+                            .not_null()
+                            .default(Expr::current_timestamp()),
+                    )
+                    .to_owned(),
+            )
+            .await?;
+
+        manager
+            .create_index(
+                Index::create()
+                    .name("idx_global_contragents_vat_number")
+                    .table(GlobalContragents::Table)
+                    .col(GlobalContragents::VatNumber)
+                    .unique()
+                    .to_owned(),
+            )
+            .await?;
+
+        manager
+            .create_index(
+                Index::create()
+                    .name("idx_global_contragents_eik")
+                    .table(GlobalContragents::Table)
+                    .col(GlobalContragents::Eik)
+                    .to_owned(),
+            )
+            .await
+    }
+
+    async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
+        manager
+            .drop_table(Table::drop().table(GlobalContragents::Table).to_owned())
+            .await
+    }
+}
+
+#[derive(DeriveIden)]
+enum GlobalContragents {
+    #[sea_orm(iden = "global_contragents")]
+    Table,
+    Id,
+    VatNumber,
+    Eik,
+    RegistrationNumber,
+    CustomerId,
+    SupplierId,
+    CompanyName,
+    CompanyNameBg,
+    LegalForm,
+    Status,
+    Address,
+    LongAddress,
+    StreetName,
+    City,
+    PostalCode,
+    Country,
+    ContactPerson,
+    Phone,
+    Email,
+    Website,
+    Type,
+    Iban,
+    Bic,
+    BankName,
+    VatValid,
+    EikValid,
+    Valid,
+    LastValidatedAt,
+    CreatedAt,
+    UpdatedAt,
+}

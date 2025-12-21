@@ -1,0 +1,219 @@
+# ====================
+# Rust/Cargo
+# ====================
+/target/
+**/target/
+**/*.rs.bk
+# Keep Cargo.lock for libraries, comment out for applications
+# Cargo.lock
+*.pdb
+
+# Rust debug artifacts
+debug_parser
+debug_parser_fixed
+debug_parser_new
+test_controlisy_multiple_docs
+test_real_controlisy
+test_simple_parser
+simple_controlisy_test
+
+# ====================
+# Node.js/Frontend
+# ====================
+node_modules/
+dist/
+build/
+.cache/
+.parcel-cache/
+.next/
+out/
+.nuxt/
+.vuepress/dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# ====================
+# Environment & Config
+# ====================
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+configdb.json
+!configdb.example.json
+!.env.example
+!.env.production.example
+
+# ====================
+# Database
+# ====================
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+accounting.db
+postgres-data/
+mysql-data/
+/data/
+
+# ====================
+# Docker
+# ====================
+.docker/
+docker-compose.override.yml
+*.dockerfile.swp
+
+# ====================
+# IDE & Editors
+# ====================
+# VSCode
+.vscode/
+*.code-workspace
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Vim
+*.swp
+*.swo
+*.swn
+*~
+.vim/
+
+# Emacs
+\#*\#
+.\#*
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+.Trash-*
+
+# ====================
+# Logs
+# ====================
+logs/
+*.log
+backend.log
+backend_run.log
+frontend.log
+server.log
+graphql.log
+npm-debug.log*
+yarn-debug.log*
+
+# ====================
+# Test Files
+# ====================
+test_*.html
+test_*.js
+test_*.json
+test_*.xml
+test_*.csv
+!test_*.rs
+!test_*.sh
+
+# ====================
+# Python
+# ====================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ====================
+# Backup Files
+# ====================
+*.backup
+*.bak
+backups/
+*.orig
+
+# ====================
+# Temporary Files
+# ====================
+temp/
+tmp/
+*.tmp
+*.temp
+.cache/
+
+# ====================
+# Archives
+# ====================
+*.tar.gz
+*.zip
+*.rar
+*.7z
+*.gz
+*.bz2
+*.xz
+
+# ====================
+# SSL/TLS Certificates
+# ====================
+*.pem
+*.key
+*.crt
+*.csr
+!*.example.pem
+
+# ====================
+# CI/CD
+# ====================
+.gitlab-runner/
+.github/workflows/*.tmp
+
+# ====================
+# Custom Project Specific
+# ====================
+OLD-ac-bg/
+file/
+star-start.zip
+*.pid
+banki/
+z-cont/
+z-import-format/
+BLOG/
+
+# Keep documentation and config examples
+!README*.md
+!CHANGELOG.md
+!*.example.*

@@ -1,0 +1,25 @@
+:3000 {
+	# Enable gzip compression
+	encode gzip
+
+	# Serve static files from /usr/share/caddy
+	root * /usr/share/caddy
+
+	# Cache static assets (JS/CSS have hashes in filenames, safe to cache)
+	@static {
+		path *.js *.css *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot
+	}
+	header @static Cache-Control "public, max-age=31536000, immutable"
+
+	# No cache for HTML files (to ensure new builds are loaded)
+	@html {
+		path *.html /
+	}
+	header @html Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+
+	# SPA fallback - serve index.html for all non-file requests
+	try_files {path} {path}/ /index.html
+
+	# File server
+	file_server
+}

@@ -1,0 +1,43 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "database": "rs_ac_bg",
+    "username": "postgres",
+    "password": "CHANGE_ME_IN_PRODUCTION",
+    "max_connections": 10,
+    "min_connections": 5,
+    "connect_timeout": 10,
+    "acquire_timeout": 10,
+    "idle_timeout": 600
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8080,
+    "workers": 4,
+    "enable_cors": true,
+    "cors_origins": ["http://localhost:3000", "http://localhost:5173"]
+  },
+  "logging": {
+    "level": "info",
+    "file": "logs/backend.log",
+    "stdout": true
+  },
+  "initial_setup": {
+    "create_demo_company": true,
+    "demo_company_name": "Demo Company Ltd",
+    "demo_company_eik": "000000000",
+    "demo_company_vat": "BG000000000",
+    "load_chart_of_accounts": true
+  },
+  "object_storage": {
+    "enabled": false,
+    "endpoint": "https://your-object-storage-endpoint",
+    "access_key": "CHANGE_ME_IN_PRODUCTION",
+    "secret_key": "CHANGE_ME_IN_PRODUCTION",
+    "region": "eu-central",
+    "bucket": "your-bucket-name",
+    "prefix": "rs-ac-bg/backups",
+    "force_path_style": true
+  }
+}
